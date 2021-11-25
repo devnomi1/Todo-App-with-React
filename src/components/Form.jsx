@@ -1,12 +1,12 @@
 import React from "react";
 
-function Form({ inputText, setInputText, todos, setTodos }) {
+function Form({ inputText, setInputText, todos, setTodos , setStatus}) {
 	// Add todos to the  List
     const submitTodoHandler = (e) => {
         e.preventDefault()
 		setTodos([
 			...todos,
-			{ text: inputText, completetd: false, id: Math.random() * 1000 },
+			{ text: inputText, completed: false, id: Math.random() * 1000 },
         ]);
         setInputText("")
 	};
@@ -14,7 +14,11 @@ function Form({ inputText, setInputText, todos, setTodos }) {
 	// input value change Handler
 	const inputTextHandler = (e) => {
 		setInputText(e.target.value);
-	};
+    };
+    
+    function changeStatusHandler(e) {
+         setStatus(e.target.value)
+     }
 
 	return (
 		<form>
@@ -28,7 +32,7 @@ function Form({ inputText, setInputText, todos, setTodos }) {
 				<i className="fas fa-plus-square"></i>
 			</button>
 			<div className="select">
-				<select name="todos" className="filter-todo">
+				<select onChange={changeStatusHandler} name="todos" className="filter-todo">
 					<option value="all">All</option>
 					<option value="completed">Completed</option>
 					<option value="uncompleted">Uncompleted</option>
