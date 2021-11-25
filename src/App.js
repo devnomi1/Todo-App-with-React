@@ -8,11 +8,23 @@ function App() {
 	const [todos, setTodos] = useState([]);
 	const [status, setStatus] = useState("All");
 	const [filteredTodos, setFilteredTodos] = useState([]);
+
+
+  // RUn Once when App Start
+ useEffect(() => {
+   getLocalTodos();
+   
+ }, [])
+  
+
 	// USE EFFECT
 	useEffect(() => {
 		filteredTodoHandler();
+		
+		saveLocalTodos();
 	}, [todos, status]);
 
+	// Checked filtered todo
 	function filteredTodoHandler() {
 		switch (status) {
 			case "completed":
@@ -23,6 +35,20 @@ function App() {
 				break;
 			default:
 				setFilteredTodos(todos);
+		}
+	}
+	// Save todos to Local Storage
+	function saveLocalTodos() {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}
+
+	// get todos from local storage
+	function getLocalTodos() {
+		if (localStorage.getItem("todos" === null)) {
+			localStorage.setItem("todos", JSON.stringify([]));
+		} else {
+			let todoLocal = JSON.parse(localStorage.getItem("todos"));
+		setTodos(todoLocal)
 		}
 	}
 
